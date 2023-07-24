@@ -4,6 +4,9 @@ import { join } from 'path';
 import { UsersModule } from './users/users.module';
 import { ApolloDriver , ApolloDriverConfig } from '@nestjs/apollo';
 import { AuthModule } from './auth/auth.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { DatabaseConfigService } from './config/database.config.service';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -12,7 +15,14 @@ import { AuthModule } from './auth/auth.module';
     driver:ApolloDriver
   }),
   UsersModule,
-  AuthModule
+  AuthModule,
+  ConfigModule.forRoot({
+    isGlobal:true
+  }),
+  TypeOrmModule.forRootAsync({
+    useClass:DatabaseConfigService,
+    inject:[DatabaseConfigService]
+  })
 ],
 
 })
