@@ -35,6 +35,9 @@ $ npm install
 ## Running the app
 
 ```bash
+#create database
+$ sudo docker run --name postgres-playground -e POSTGRES_PASSWORD=1010 -e POSTGRES_DB=playGround -p 5000:5432 -d --restart always postgres
+
 # development
 $ npm run start
 
